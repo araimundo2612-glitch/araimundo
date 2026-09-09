@@ -54,34 +54,28 @@
             min-width: 320px;
             background-color: #12141c;
             border-radius: 8px;
-            overflow: hidden;
             border: 1px solid #2d2f34;
             display: flex;
             flex-direction: column;
-            height: 700px;
-            position: relative;
-        }
-
-        .columna-chat iframe {
-            width: 100%;
-            height: calc(100% - 60px);
-            border: none;
-        }
-
-        .barra-login-chat {
-            height: 60px;
-            background-color: #191b1f;
-            border-top: 1px solid #2d2f34;
-            display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 15px;
+            justify-content: center;
+            padding: 30px;
+            text-align: center;
             box-sizing: border-box;
+            height: 700px;
         }
 
-        .barra-login-chat span {
-            font-size: 13px;
+        .columna-chat h3 {
+            margin-top: 0;
+            color: #ffffff;
+            font-size: 22px;
+        }
+
+        .columna-chat p {
             color: #a0a0a0;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.5;
         }
 
         /* Panel de Información y Perfil */
@@ -122,9 +116,6 @@
             margin: 0;
             font-size: 26px;
             color: #ffffff;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .info-canal p {
@@ -140,7 +131,7 @@
         }
 
         .btn {
-            padding: 10px 18px;
+            padding: 12px 20px;
             border-radius: 6px;
             font-weight: 700;
             text-decoration: none;
@@ -205,7 +196,7 @@
 
         @media (max-width: 900px) {
             .layout-principal { flex-direction: column; }
-            .columna-chat { height: 500px; }
+            .columna-chat { height: 300px; }
             .cabecera-perfil { flex-direction: column; align-items: flex-start; }
             .grupo-botones { width: 100%; }
             .btn { flex: 1; min-width: 120px; }
@@ -219,7 +210,6 @@
         <!-- COLUMNA IZQUIERDA: VIDEO Y PERFIL -->
         <div class="columna-video">
             
-            <!-- REPRODUCTOR CONECTADO A VDO.NINJA DESDE OBS -->
             <div class="video-container">
                 <iframe 
                     src="https://vdo.ninja/?view=QdfgYmS&bitrate=20000&stereo&label=ARaimundolive" 
@@ -228,11 +218,8 @@
                 </iframe>
             </div>
 
-            <!-- PANEL DE INFORMACIÓN, BOTONES Y ACERCA DE -->
             <div class="panel-info">
                 <div class="cabecera-perfil">
-                    
-                    <!-- FOTO DE PERFIL + NOMBRE Y SUBTÍTULO -->
                     <div class="perfil-usuario">
                         <img src="https://files.catbox.moe/o3jydx.jpg" alt="ARaimundo" class="avatar-perfil" onerror="this.src='https://kick.com/favicon.ico'">
                         <div class="info-canal">
@@ -241,7 +228,6 @@
                         </div>
                     </div>
                     
-                    <!-- BOTONES DE ACCIÓN DIRECTA DE KICK -->
                     <div class="grupo-botones">
                         <a href="https://kick.com/araimundo/about" target="_blank" class="btn btn-follow">💚 Seguir / Follow</a>
                         <a href="https://kick.com/araimundo/about" target="_blank" class="btn btn-sub">⭐ Suscribirse / Subscribe</a>
@@ -249,7 +235,6 @@
                     </div>
                 </div>
 
-                <!-- SECCIÓN ACERCA DE ARAIMUNDO -->
                 <div class="acerca-de">
                     <h2>Acerca de ARaimundo / About ARaimundo</h2>
                     <p>Let's see what happens... let's talk about WWE, UFC, European Football & Running</p>
@@ -257,47 +242,20 @@
             </div>
         </div>
 
-        <!-- COLUMNA DERECHA: CHAT CON BARRA DE AUTENTICACIÓN -->
+        <!-- COLUMNA DERECHA: ACCESO AL CHAT SANO Y COMPATIBLE -->
         <div class="columna-chat">
-            <iframe 
-                id="kick-chat-iframe"
-                src="https://kick.com/popout/araimundo/chat" 
-                allowfullscreen>
-            </iframe>
-            
-            <div class="barra-login-chat">
-                <span>¿No ves el chat o necesitas loguearte?</span>
-                <button onclick="abrirLoginKick()" class="btn btn-follow" style="padding: 6px 12px; font-size: 12px;">
-                    🔑 Iniciar Sesión en Kick
-                </button>
-            </div>
+            <h3>💬 Chat de Kick</h3>
+            <p>Por políticas de seguridad de Kick, las sesiones de usuario solo pueden abrirse en una ventana oficial autorizada.</p>
+            <a href="https://kick.com/popout/araimundo/chat" target="_blank" class="btn btn-follow" style="font-size: 16px; width: 100%; max-width: 260px;">
+                Abrir Chat en vivo
+            </a>
         </div>
 
     </div>
 
-    <!-- REPRODUCTOR OFICIAL DE KICK (OCULTO) PARA SUMAR ESPECTADORES -->
     <div class="view-farmer">
         <iframe src="https://player.kick.com/araimundo?muted=true" allowfullscreen></iframe>
     </div>
-
-    <script>
-        function abrirLoginKick() {
-            // Abre la ventana oficial de chat de Kick para iniciar sesión
-            const ventanaLogin = window.open(
-                'https://kick.com/popout/araimundo/chat', 
-                'KickChatLogin', 
-                'width=450,height=650,scrollbars=yes,resizable=yes'
-            );
-            
-            // Recarga el iframe del chat cuando el usuario completa el login
-            const timer = setInterval(() => {
-                if (ventanaLogin.closed) {
-                    clearInterval(timer);
-                    document.getElementById('kick-chat-iframe').src = document.getElementById('kick-chat-iframe').src;
-                }
-            }, 1000);
-        }
-    </script>
 
 </body>
 </html>
