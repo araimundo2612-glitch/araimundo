@@ -10,10 +10,11 @@
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            box-sizing: border-box;
         }
 
         .layout-principal {
@@ -26,7 +27,13 @@
 
         .columna-video {
             flex: 3;
-            min-width: 300px;
+            min-width: 100%;
+        }
+
+        @media (min-width: 901px) {
+            .columna-video {
+                min-width: 300px;
+            }
         }
 
         .video-container {
@@ -48,10 +55,10 @@
             border: none;
         }
 
-        /* Columna Derecha (Contiene bloques del Chat y Donaciones) */
+        /* Columna Derecha */
         .columna-derecha {
             flex: 1;
-            min-width: 320px;
+            width: 100%;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -66,7 +73,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
             box-sizing: border-box;
         }
@@ -75,7 +82,7 @@
             margin-top: 0;
             margin-bottom: 10px;
             color: #ffffff;
-            font-size: 20px;
+            font-size: 18px;
             line-height: 1.3;
         }
 
@@ -123,12 +130,12 @@
         /* Panel de Información y Perfil */
         .panel-info {
             background-color: #191b1f;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
-            margin-top: 20px;
+            margin-top: 15px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             border: 1px solid #2d2f34;
         }
 
@@ -143,12 +150,12 @@
         .perfil-usuario {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .avatar-perfil {
-            width: 65px;
-            height: 65px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #53f81e;
@@ -156,39 +163,37 @@
 
         .info-canal h1 {
             margin: 0;
-            font-size: 26px;
+            font-size: 22px;
             color: #ffffff;
         }
 
         .info-canal p {
             color: #a0a0a0;
-            margin: 5px 0 0 0;
-            font-size: 14px;
+            margin: 3px 0 0 0;
+            font-size: 13px;
         }
 
         .grupo-botones {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         .btn {
-            padding: 10px 18px;
+            padding: 10px 14px;
             border-radius: 6px;
             font-weight: 700;
             text-decoration: none;
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             transition: all 0.2s ease-in-out;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-        }
-
-        .btn:hover {
-            opacity: 0.85;
-            transform: translateY(-1px);
+            flex: 1;
+            min-width: 110px;
         }
 
         .btn-follow { 
@@ -210,37 +215,45 @@
 
         .acerca-de {
             border-top: 1px solid #2d2f34;
-            padding-top: 18px;
+            padding-top: 15px;
         }
         
         .acerca-de h2 {
-            font-size: 18px;
+            font-size: 16px;
             margin-top: 0;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #ffffff;
         }
         
         .acerca-de p {
             color: #d0d0d0;
-            font-size: 14px;
-            line-height: 1.6;
+            font-size: 13px;
+            line-height: 1.5;
             margin: 0;
         }
 
         .view-farmer {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            opacity: 0.01;
-            pointer-events: none;
-            bottom: 0;
+            display: none;
         }
 
-        @media (max-width: 900px) {
-            .layout-principal { flex-direction: column; }
-            .cabecera-perfil { flex-direction: column; align-items: flex-start; }
-            .grupo-botones { width: 100%; }
-            .btn { flex: 1; min-width: 120px; }
+        @media (min-width: 901px) {
+            body { padding: 20px; }
+            .panel-info { padding: 20px; margin-top: 20px; }
+            .avatar-perfil { width: 65px; height: 65px; }
+            .info-canal h1 { font-size: 26px; }
+            .grupo-botones { width: auto; }
+            .btn { flex: initial; font-size: 14px; padding: 10px 18px; }
+            .layout-principal { flex-wrap: nowrap; }
+            .columna-derecha { min-width: 320px; width: auto; }
+            .view-farmer {
+                display: block;
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                opacity: 0.01;
+                pointer-events: none;
+                bottom: 0;
+            }
         }
     </style>
 </head>
@@ -254,7 +267,8 @@
             <div class="video-container">
                 <iframe 
                     src="https://vdo.ninja/?view=QdfgYmS&bitrate=20000&stereo&label=ARaimundolive" 
-                    allow="autoplay; camera; microphone; fullscreen" 
+                    allow="autoplay; camera; microphone; fullscreen; picture-in-picture" 
+                    playsinline
                     allowfullscreen>
                 </iframe>
             </div>
@@ -269,10 +283,11 @@
                         </div>
                     </div>
                     
+                    <!-- Botones con redirección forzada para evitar errores de la app -->
                     <div class="grupo-botones">
-                        <a href="https://kick.com/araimundo/about" target="_blank" class="btn btn-follow">💚 Seguir / Follow</a>
-                        <a href="https://kick.com/araimundo/about" target="_blank" class="btn btn-sub">⭐ Suscribirse / Subscribe</a>
-                        <a href="https://kick.com/araimundo/about" target="_blank" class="btn btn-gift">🎁 Regalar Subs / Gift Subs</a>
+                        <a href="https://kick.com/araimundo/about" onclick="abrirKick(event, 'https://kick.com/araimundo/about')" class="btn btn-follow">💚 Seguir</a>
+                        <a href="https://kick.com/araimundo/about" onclick="abrirKick(event, 'https://kick.com/araimundo/about')" class="btn btn-sub">⭐ Suscribirse</a>
+                        <a href="https://kick.com/araimundo/about" onclick="abrirKick(event, 'https://kick.com/araimundo/about')" class="btn btn-gift">🎁 Regalar Subs</a>
                     </div>
                 </div>
 
@@ -290,14 +305,14 @@
             <div class="tarjeta-panel">
                 <h3>💬 Chat de Kick</h3>
                 <p>Abre el chat interactivo oficial en una ventana emergente para enviar tus mensajes en tiempo real.</p>
-                <a href="https://kick.com/popout/araimundo/chat" target="_blank" class="btn btn-follow" style="font-size: 16px; width: 100%; max-width: 260px;">
-                    Chat de Kick / Kick Chat
+                <a href="https://kick.com/popout/araimundo/chat" onclick="abrirKick(event, 'https://kick.com/popout/araimundo/chat')" class="btn btn-follow" style="font-size: 15px; width: 100%; max-width: 260px;">
+                    Abrir Chat / Open Chat
                 </a>
             </div>
 
             <!-- SECCIÓN 2: DONACIONES CON NOTA DE VOZ -->
             <div class="tarjeta-panel">
-                <h3>🎙️Nota de Voz / Voice Notes</h3>
+                <h3>🎙️Nota de Voz / Voice Chat</h3>
                 <a href="https://run.weezyx.com/t/araimundo2/EVaHo6TtfJE/" target="_blank" class="imagen-audio-link">
                     <img src="VOICENOTE.png" alt="Voice Note Audio">
                 </a>
@@ -309,10 +324,19 @@
 
     </div>
 
-    <!-- REPRODUCTOR OCULTO PARA CONTAJE DE ESPECTADORES -->
+    <!-- REPRODUCTOR OCULTO -->
     <div class="view-farmer">
-        <iframe src="https://player.kick.com/araimundo?muted=true" allowfullscreen></iframe>
+        <iframe src="https://player.kick.com/araimundo?muted=true"></iframe>
     </div>
+
+    <!-- Script para garantizar apertura del enlace directo -->
+    <script>
+        function abrirKick(event, url) {
+            event.preventDefault();
+            // Abre en nueva pestaña asegurando el destino directo
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+    </script>
 
 </body>
 </html>
