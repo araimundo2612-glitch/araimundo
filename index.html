@@ -29,16 +29,21 @@
             min-width: 300px;
         }
 
+        /* Contenedor principal con la imagen OFFLINE como fondo */
         .video-container {
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
             background-color: #000;
+            background-image: url('OFFLINE.png');
+            background-size: cover;
+            background-position: center;
             border-radius: 8px;
             overflow: hidden;
             border: 2px solid #53f81e;
         }
 
+        /* Iframe transparente sobrepuesto */
         .video-container iframe {
             position: absolute;
             top: 0;
@@ -46,30 +51,7 @@
             width: 100%;
             height: 100%;
             border: none;
-            z-index: 1;
-        }
-
-        /* Capa con la imagen Offline encima del video */
-        .overlay-offline {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            background-image: url('OFFLINE.png');
-            background-size: cover;
-            background-position: center;
-            z-index: 2;
-            display: flex;
-            pointer-events: none; /* Permite interactuar con la pantalla */
-            transition: opacity 0.4s ease;
-        }
-
-        /* Oculta la imagen cuando se detecta emisión activa */
-        .overlay-offline.oculto {
-            opacity: 0;
-            visibility: hidden;
+            background-color: transparent;
         }
 
         /* Columna Derecha (Contiene bloques del Chat y Donaciones) */
@@ -276,13 +258,9 @@
         <div class="columna-video">
             
             <div class="video-container">
-                <!-- Capa Offline -->
-                <div id="offlineOverlay" class="overlay-offline"></div>
-                
-                <!-- Reproductor con API de eventos de VDO.Ninja -->
+                <!-- VDO.Ninja configurado con fondo transparente y autohide -->
                 <iframe 
-                    id="vdoIframe"
-                    src="https://vdo.ninja/?view=QdfgYmS&bitrate=20000&stereo&label=ARaimundolive&api=1" 
+                    src="https://vdo.ninja/?view=QdfgYmS&bitrate=20000&stereo&label=ARaimundolive&transparent=1&autostart=1" 
                     allow="autoplay; camera; microphone; fullscreen" 
                     allowfullscreen>
                 </iframe>
@@ -343,27 +321,5 @@
         <iframe src="https://player.kick.com/araimundo?muted=true" allowfullscreen></iframe>
     </div>
 
-    <!-- Detección en tiempo real del estado de emisión -->
-    <script>
-        window.addEventListener('message', function(event) {
-            if (event.origin.includes('vdo.ninja')) {
-                try {
-                    const data = JSON.parse(event.data);
-                    const overlay = document.getElementById('offlineOverlay');
-                    
-                    // Si llega señal de video activa de VDO.Ninja, ocultar imagen Offline
-                    if (data.action === 'video-active' || data.action === 'playing' || data.value === true) {
-                        overlay.classList.add('oculto');
-                    }
-                    // Si se corta o finaliza la transmisión, mostrar imagen Offline
-                    if (data.action === 'video-inactive' || data.action === 'stopped') {
-                        overlay.classList.remove('oculto');
-                    }
-                } catch (e) {
-                    // Ignora mensajes de comunicación interna no compatibles
-                }
-            }
-        });
-    </script>
 </body>
 </html>
